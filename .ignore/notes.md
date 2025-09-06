@@ -1,4 +1,4 @@
-### A TODO APP IN C
+### A REWARD-TODO-BASED APP IN C
 
 ### ARCHITECTURE
 
@@ -39,7 +39,7 @@ or all the task are in a list with an id.
 ### CODE DESIGN
 
 2 main different objects:
-ACHIEVEMENT & DESIRE
+ACHIEVEMENT & DESIRE/YIELD
 and 1 unit of measure: *$$* (TOKEN)
 
 *TASK*
@@ -53,9 +53,9 @@ and 1 unit of measure: *$$* (TOKEN)
 *ACHIEVEMENTS*
     -> completed TASK historic
 *ACHIEVEMENTS_LIST*
-    DONE_TASK1 DONE_TASK2 ...
+    `DONE_TASK1 DONE_TASK2 ...`
 
-*DESIRE*
+*YIELD*
     - ID
     - NAME
     - COST
@@ -95,7 +95,7 @@ and 1 unit of measure: *$$* (TOKEN)
         *print each task with its associated reward*
     - COMPLETETASK()
         scanf the task ID
-        remove_task_from_list
+        `remove_task_from_list`
     - PRINTDESIRES()
         ...
     - PRINTACHIEVEMNT() (Completed tasks)
