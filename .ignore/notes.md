@@ -105,7 +105,7 @@ and 1 unit of measure: *$$* (TOKEN)
     - UPDATETOKEN()
     - PRINTTOKEN() (Always visible)
 
-###GLOBAL DESIGN
+### GLOBAL DESIGN
 src/
   main.c
   cli.c            // parse argv -> call services
@@ -121,3 +121,14 @@ data/
   rewards.tsv
 ledger/
 snapshots/
+
+Let's say I want to print the events (by default it will print the events of current month.)
+I need to go in ./ledger/
+    from here: I need to check what is the current month
+        I use `t_time time = time_now()`
+            I parse time and keep the month: 09 (sept). (ok) I actually need to change the month from 9 to 09 (but my strcat is segfaulting :()
+                so if the `time.current_month` is 09, I compare it with each filename and open the one corresponding. 
+                    I write a new line of the Event.
+                        TIMESTAMP            TYPE    ID    TOKEN   DONE   NOTES       (<=if there is no file, write this line)
+                        2025-09-06:T20:57    QUEST   YTSH  +50     YES    42 related  (raw data) 
+

@@ -53,7 +53,7 @@ void    read_tasks()
     }
     close(task_fd);
 }
-
+/*
 int main(void)
 {
     printf("List tasks [1]\n");
@@ -68,3 +68,4 @@ int main(void)
         new_task(name);
     }
 }
+*/

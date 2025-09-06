@@ -1,19 +1,20 @@
 NAME = todo
 DIR = src
-INLCUDES = include
+INCLUDES = include
 CC = gcc
 CFLAGS = -g
-SRCS = $(DIR)/handle_task.c gnl/get_next_line.c gnl/get_next_line_utils.c
+SRCS = $(DIR)/handle_task.c gnl/get_next_line.c gnl/get_next_line_utils.c \
+		$(DIR)/ledger.c lib/ft_itoa.c
 OBJS = $(SRCS:.c=.o)
 
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o $@
 
 %.o: %.c
-	$(CC) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
