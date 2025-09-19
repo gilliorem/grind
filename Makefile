@@ -1,32 +1,32 @@
-NAME = todo
-DIR = src
-INCLUDES = include
+NAME = grind
 CC = gcc
 CFLAGS = -g
-SRCS = $(DIR)/handle_task.c gnl/get_next_line.c gnl/get_next_line_utils.c \
-		$(DIR)/ledger.c lib/ft_itoa.c
-OBJS = $(SRCS:.c=.o)
+SRC_DIR = src
+SRCS = handle_task.c ledger.c main.c
+
+OBJS = $(addprefix $(SRC_DIR)/,$(SRCS:.c=.o))
+INCLUDES = -Iinclude -Ilibft
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
-
-debug: CFLAGS += -g3 -O0 -DDEBUG
-debug: re
-
-# Petit raccourci pratique pour lancer le binaire
-run: $(NAME)
-	./$(NAME)

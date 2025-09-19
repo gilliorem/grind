@@ -1,5 +1,4 @@
 #include "../include/task.h"
-#include "../gnl/get_next_line.h"
 
 void	print_events();
 
@@ -36,7 +35,7 @@ int	find_current_ledger_file()
 	char *current_month = ft_itoa(month);
 	if (month < 10)
 	{
-		char *new_current_month = strjoin("0", current_month);
+		char *new_current_month = ft_strjoin("0", current_month);
 		printf("%s\n", new_current_month);
 	}
 	return 0;
@@ -44,11 +43,5 @@ int	find_current_ledger_file()
 	//printf("%s\n",full_path);
 	//int ledger_fd = open(ledger_path)
 	
-	return 0;
-}
-
-int	main()
-{
-	find_current_ledger_file();	
 	return 0;
 }

@@ -1,5 +1,4 @@
 #include "../include/task.h"
-#include "../gnl/get_next_line.h"
 void    putchar_fd(int fd, char c)
 {
     write(fd, &c, 1);
@@ -14,7 +13,7 @@ void    write_file(int fd, char *s)
 int count_lines()
 {
     int lines = 0;
-    int fd = open("task", O_RDONLY);
+    int fd = open("../task", O_RDONLY);
     char *line;
     while ((line = get_next_line(fd)))
     {

@@ -1,5 +1,6 @@
 #ifndef TASK_H
 # define TASK_H
+# include "../libft/libft.h"
 # include <stdbool.h> // bool
 # include <string.h> // strcat
 # include <stdio.h>
@@ -25,8 +26,5 @@ typedef struct s_event
 	bool done;
 	char *notes;
 }t_event;
-
-
-char	*ft_itoa(int n);
 
 #endif
