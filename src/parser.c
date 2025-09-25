@@ -24,6 +24,12 @@ int	count_input_elements(char **input)
 	return i;
 }
 
+void	parse_cmd(char *cmd)
+{
+	if (strcmp(cmd, commands[0]) == 0)
+		log_quests();
+}
+
 char*	get_cmd(char **input)
 {
 	char *cmd;
@@ -34,7 +40,8 @@ char*	get_cmd(char **input)
 		if (strcmp(input[0], commands[i]) == 0)
 		{
 			cmd = input[0];
-			printf("element 1 is matching with cmd:%s\n",commands[i]);
+			//printf("element 1 is matching with cmd:%s\n",commands[i]);
+			parse_cmd(cmd);
 			return (cmd);
 		}
 	}
@@ -58,11 +65,12 @@ char*	get_context(char **input)
 			return (context);
 		}
 	}
-	perror("please enter a valid command\n");
+	char error_msg[] = "please enter a valid context\n";
+	write(2, error_msg, strlen(error_msg)); 
 	return NULL;
 }
 
-char*	get_args(char **input)
+char*	get_arg(char **input)
 {
 	char *arg;
 	if (!input[2])
@@ -76,23 +84,49 @@ char*	get_args(char **input)
 			return (arg);
 		}
 	}
-	perror("please enter a valid argument\n");
+	char error_msg[] = "please enter a valid argument\n";
+	write(2, error_msg, strlen(error_msg)); 
 	return NULL;
 }
 
-char	**get_user_prompt()
+int	handle_words(char **words)
+{
+	char *cmd;
+	char *context;
+	char *arg;
+	cmd = get_cmd(words);
+	if (!cmd)
+		return 0;
+	else
+		return 1;
+	context = get_context(words);
+	if (cmd && !context)
+		return 0;
+	else 
+		return 2;
+	arg = get_arg(words);
+	if (cmd && context && !arg)
+		return 0;
+	return 3;
+}
+
+void	handle_exit(char *line)
+{
+	if (strcmp(line, "exit") == 0)
+		exit(0);
+}
+
+void	get_user_prompt()
 {
 	char *line;
 	char **words;
 	while (1)
 	{
 		line = readline("./grind$ ");
-		if (strcmp(line,  "exit") == 0)
-			exit(0);
 		words = ft_split(line, ' ');
-		get_cmd(words);
 		add_history(line);
+		handle_words(words);
+		handle_exit(line);
 	}
-	return words;
 }
 

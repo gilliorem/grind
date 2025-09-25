@@ -30,13 +30,23 @@ typedef struct s_event
 	char *notes;
 }t_event;
 
-
+/*Time*/
 char	*get_current_time();
 void	get_deadline_time(int days);
 int	get_current_month();
+/*File*/
 char 	*get_ledger_file();
+/*Parser*/
 void	reset_prompt(int sig);
-int	identify_cmd(char **input);
-char	**get_user_prompt();
 char	*get_cmd(char **input);
+char	*get_context(char **input);
+char	*get_arg(char **input);
+
+void	get_user_prompt();
+int		handle_words(char **words);
+void	handle_exit(char *line);
+void	parse_cmd(char *cmd);
+
+/*Data*/
+int	log_quests();
 #endif
