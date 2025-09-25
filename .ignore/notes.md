@@ -187,3 +187,8 @@ arg
 
 we use readline to get the user input.
 
+
+We need to think about the element review...
+I cannot check each combination.
+I need think of a logic that works for the cmd + arg + ...
+
