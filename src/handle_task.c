@@ -12,16 +12,16 @@ void    write_file(int fd, char *s)
 
 int count_lines()
 {
-    int lines = 0;
+    int n = 0;
     int fd = open("../task", O_RDONLY);
     char *line;
     while ((line = get_next_line(fd)))
     {
-        lines++;
+        n++;
         free(line);
     }
     close(fd);
-    return lines;
+    return n;
 }
 
 t_task    new_task(char *name)

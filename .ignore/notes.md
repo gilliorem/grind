@@ -122,7 +122,21 @@ data/
 ledger/
 snapshots/
 
-Let's say I want to print the events (by default it will print the events of current month.)
+I can use readline()
+there is an infinite loop running in the `background`
+each time I prompt, 
+- readline get the input
+- my parser parse (transform the different elements in *token*)
+- />.grind ***print events 30***
+-			  cmd   arg1   arg2
+	*output*
+ls yield
+ls quest
+	has to print in a time order or a expensive order or a importance order
+
+log balance
+
+Let's say I want to print the events (by default it will prompt the user)
 I need to go in ./ledger/
     from here: I need to check what is the current month
         I use `t_time time = time_now()`
@@ -143,3 +157,27 @@ I run the app.
 
 25.09.25
 push from home pc
+
+### Commands
+prog cmd context arg
+grind ls event 10 // list the last 10 events saved
+grind log balance // print current wallet balance
+grind ls quest today `log the quest of the day (deadline today)`
+grind ls quest all // list all the quest
+grind ls both // list all the quest and the desire 
+grind ls quest week // list the quest of the week (until deadline comming sunday)
+grind deadline // list the quest in a deadline order
+grind ls quest // list quest in a importance order
+grind ls yield // list yields from first to last chronologically
+grind ls quest urgent // list quest in order of importantecy
+grind recap print last 5 events, 5 desires and log wallet balance
+grind help display ascreen help with commin commsasm
+
+### Tokens
+program
+cmd
+context
+arg
+
+we use readline to get the user input.
+

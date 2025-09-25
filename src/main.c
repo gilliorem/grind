@@ -1,5 +1,7 @@
 #include "../include/grind.h"
 int main()
 {
-	get_ledger_file();
+	signal(SIGINT, reset_prompt);
+	get_user_prompt();
+	return 0;
 }

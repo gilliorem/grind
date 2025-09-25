@@ -8,6 +8,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <time.h>
+# include <signal.h> 
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_task
 {
@@ -32,5 +35,8 @@ char	*get_current_time();
 void	get_deadline_time(int days);
 int	get_current_month();
 char 	*get_ledger_file();
-
+void	reset_prompt(int sig);
+int	identify_cmd(char **input);
+char	**get_user_prompt();
+char	*get_cmd(char **input);
 #endif
