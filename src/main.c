@@ -1,4 +1,5 @@
+#include "../include/grind.h"
 int main()
 {
-	printf("coucou\n");
+	get_ledger_file();
 }

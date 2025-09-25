@@ -1,15 +1,18 @@
-#include "../include/task.h"
+#include "../include/grind.h"
 
-void	print_events();
+void	print_events(); // ?
 
-char	*get_current_time()
+/* need to move to the time module time.c */
+char	*get_current_time() 
 {
-	time_t now = time(NULL);
-	char *curr_time = ctime(&now);
+	
+	time_t now = time(NULL); // returns number of seconds since 1/1/1970
+	printf("sec since 1/1/70: %ld\n", now); // 1758784912
+	char *curr_time = ctime(&now); 
 	return curr_time;
 }
 
-void	get_deadlime_time(int days)
+void	get_deadline_time(int days)
 {
 	time_t now = time(NULL);
 	time_t deadline = now + (days * (24 * 3600));
@@ -28,20 +31,19 @@ int	get_current_month()
 	return month_12;
 }
 
-int	find_current_ledger_file()
+char	*get_ledger_file()
 {
 	char *ledger_dir = "./ledger/";
 	int month = get_current_month();
 	char *current_month = ft_itoa(month);
+	char *new_current_month = strdup(current_month);
 	if (month < 10)
 	{
-		char *new_current_month = ft_strjoin("0", current_month);
+		new_current_month = ft_strjoin("0", new_current_month);
 		printf("%s\n", new_current_month);
 	}
-	return 0;
-	//char *full_path = strcat(current_month, ledger_dir);
-	//printf("%s\n",full_path);
-	//int ledger_fd = open(ledger_path)
-	
+	char *full_path = ft_strjoin(ledger_dir, new_current_month);
+	printf("%s\n",full_path);
+	int ledger_fd = open(full_path, O_RDONLY);
 	return 0;
 }
