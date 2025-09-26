@@ -43,10 +43,11 @@ char	*get_context(char **input);
 char	*get_arg(char **input);
 
 void	get_user_prompt();
-int		handle_words(char **words);
+void	handle_words(char **words, char *commands[]);
 void	handle_exit(char *line);
 void	parse_cmd(char *cmd);
 
-/*Data*/
-int	log_quests();
+/* Commands execution */
+void	cmd_log(char *cmd, char *context, int arg);
+
 #endif

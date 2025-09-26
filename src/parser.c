@@ -1,11 +1,14 @@
 #include "../include/grind.h"
 // list token
 
+//TODO: store these in a proper place...
 char *tokens[] = {"command", "context", "argument"};
-char *commands[] = {"ls", "log", "recap", "help"};
-char *contexts[] = {"event", "quest", "yield", "balance", "both"};
+char *commands[] = {"ls", "log",  "add", "complete", "yield","recap", "help"};
+char *contexts[] = {"event", "quest", "desire", "balance", "both"};
 char *args[] = {"today", "tomorrow", "week", "urgent", "all"};
-// for args, need to implement numbers.
+
+char **parsed_input[] =  {commands, contexts, args};
+// for args, need to implement *numbers.*
 
 void	reset_prompt(int sig)
 {
@@ -24,12 +27,6 @@ int	count_input_elements(char **input)
 	return i;
 }
 
-void	parse_cmd(char *cmd)
-{
-	if (strcmp(cmd, commands[0]) == 0)
-		log_quests();
-}
-
 char*	get_cmd(char **input)
 {
 	char *cmd;
@@ -40,12 +37,11 @@ char*	get_cmd(char **input)
 		if (strcmp(input[0], commands[i]) == 0)
 		{
 			cmd = input[0];
-			//printf("element 1 is matching with cmd:%s\n",commands[i]);
-			parse_cmd(cmd);
+			printf("valid cmd is: %s\n",cmd);
 			return (cmd);
 		}
 	}
-	char error_msg[] = "please enter a valid command\n";
+	char error_msg[] = "please enter a valid command.\n";
 	write(2, error_msg, strlen(error_msg)); 
 	rl_replace_line("", 0);
 	return NULL;
@@ -89,25 +85,33 @@ char*	get_arg(char **input)
 	return NULL;
 }
 
-int	handle_words(char **words)
+void	handle_words(char **words, char *commands[])
 {
 	char *cmd;
 	char *context;
 	char *arg;
-	cmd = get_cmd(words);
-	if (!cmd)
-		return 0;
-	else
-		return 1;
-	context = get_context(words);
-	if (cmd && !context)
-		return 0;
-	else 
-		return 2;
-	arg = get_arg(words);
-	if (cmd && context && !arg)
-		return 0;
-	return 3;
+	int w = count_input_elements(words);
+	char error[] = "Please enter correct number of arguments.\n";
+	switch (w)
+	{
+		case 1:
+			cmd = get_cmd(words);
+			if (!cmd)
+				execute_cmd(words, commands);
+			break;
+		case 2:
+			cmd = get_cmd(words);
+			context = get_context(words);
+			break;
+		case 3:
+			cmd = get_cmd(words);
+			context = get_context(words);
+			arg = get_arg(words);
+			break;
+		default:
+			write(STDERR_FILENO, error, strlen(error));
+			return ;
+	}
 }
 
 void	handle_exit(char *line)

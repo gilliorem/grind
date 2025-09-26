@@ -192,3 +192,24 @@ We need to think about the element review...
 I cannot check each combination.
 I need think of a logic that works for the cmd + arg + ...
 
+Sep 26, 20:00
+I need to scan the string, from there determine the elements I have in. 
+Since I am working only
+We need a scanner that we tell us 
+- how many `words` we have in our input.
+- what are they `type`
+- are the matching.
+- build a logic for a list of type. like ls that only work with execve for example.
+
+We need structure.
+we literrally need structure.
+I need a struct that holds/store commands, contexts and args.
+for now I have a list of strings `***`. I can turn this to a struct
+
+we need to make the difference between cmd and command list.
+
+struct input{
+	cmd
+	context
+	arg
+}
