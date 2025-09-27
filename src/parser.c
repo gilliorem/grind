@@ -3,7 +3,7 @@
 //TODO: store these in a proper place...
 char *tokens[] = {"command", "context", "argument"};
 char *commands[] = {"ls", "log",  "add", "complete", "yield","recap", "help"};
-char *contexts[] = {"event", "quests", "desire", "balance", "both"};
+char *contexts[] = {"events", "quests", "rewards", "balance", "both"};
 char *args[] = {"5", "10", "0", "-1", "today", "tomorrow", "week", "urgent", "all"};
 // TODO: for args, need to implement numbers
 
@@ -68,18 +68,25 @@ char*	get_arg(char **input)
 {
 	char *arg = "";
 	int flag = 1;
-	if (!input[2])
+	if (!input[2 + 1])
 		return (NULL);
-	for (int i = 0; input[2][i]; i++)
+	for (int i = 0; input[2 + 1][i]; i++)
 	{
-		if (!isdigit(input[2][i]))
+		if (!isdigit(input[2 + 1][i]))
 		{
 			flag = 0;
 			break;
 		}
 	}
+	printf("flag:%d\n",flag);
 	if (flag == 1)
-		return (strcpy(arg, input[2]));
+	{
+		printf("%s\n%s\n",input[1],input[2]);
+		char *dest = strcpy(input[2 + 1], arg);
+		char *src = arg;
+		printf("dest:%s\nsrc:%s\n",dest,src);
+		return (dest);
+	}
 	for (int i = 0; args[i]; i++)
 	{
 		if (strcmp(input[2], args[i]) == 0)

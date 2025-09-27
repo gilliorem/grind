@@ -139,13 +139,49 @@ log balance
 
 Let's say I want to print the events (by default it will prompt the user)
 I need to go in ./ledger/
-    from here: I need to check what is the current month
-        I use `t_time time = time_now()`
-            I parse time and keep the month: 9 (sept). I need to change the month from 9 to 09 (strcat is segfaulting)
-                so if the `time.current_month` is 09, I compare it with each filename and open the one corresponding. 
-                    I write a new line of the Event.
-                        TIMESTAMP            TYPE    ID    TOKEN   DONE   NOTES       (<=if there is no file, write this line)
-                        2025-09-06:T20:57    QUEST   YTSH  +50     YES    42 related  (raw data) 
+from here: I need to check what is the current month
+I use `t_time time = time_now()`
+I parse time and keep the month: 9 (sept). I need to change the month from 9 to 09 (strcat is segfaulting)
+so if the `time.current_month` is 09, I compare it with each filename and open the one corresponding. 
+I write a new line of the Event.
+TIMESTAMP            TYPE    ID    TOKEN   DONE   NOTES       (<=if there is no file, write this line)
+2025-09-06:T20:57    QUEST   YTSH  +50     YES    42 related  (raw data) 
+
+So any function like ls quests
+need to go in that ledger file and start parsing the data properly ?
+no. it would be for specific command want to have specific info.
+it is like 
+ls
+ls -l
+ls -la
+ls -h
+the default infile is always the same but the output will be in 3
+different forms with additional data.
+In my case, when I create a quest, with `> add quest "EXAM RANK 3"` I
+can retrieve the time: it will be modified-time of the quests file. since I will write into this file. 
+Where do I get the ledger-field data ?
+TIMESTAMP: quests.tsv or any_file.tsv being written.
+TYPE: argument in the cmd line (words[1]) `quest`
+ID: words[2] "EXAM RANK 3"
+GOLD: words[3] or based on the words[2] value:
+actually even the words[2] value will be based on the words[1] value.
+and words[1] depends on words[0]
+
+for example for words[0] being add, that means that the words[1] cannot
+be `balance` for example. that eliminate some context values.
+can be 
+- event
+- reward
+thats it.
+I am no suppose to add any thing else.
+I just have an idea that seams good. lets say I type `add quest`
+then I am being scanf in the readline to get the different values, like the quest ID.
+`add quest`
+    ID:
+
+
+but for now my logic is different: I directly read from the quests file
+and I even want to add the quests when I type add quest cmd.
 
 I run the app.
 
@@ -228,5 +264,10 @@ for example
 we also need the arg value
 
 need to handle the last argument (arg) 
-can be a number
+can be a number.
 can be a string.
+
+Sep 28, 01:32
+Restructuration:
+    need to have a logic for each cmd
+    and cmd with arguments
