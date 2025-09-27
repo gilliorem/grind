@@ -48,6 +48,8 @@ void	handle_exit(char *line);
 void	parse_cmd(char *cmd);
 
 /* Commands execution */
-void	cmd_log(char *cmd, char *context, int arg);
+void	cmd_ls(char *cmd, char *context, int n);
+int		log_quests(int n);
 
+void	execute_cmd(char **input, char *commands[], int arg);
 #endif

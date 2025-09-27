@@ -203,8 +203,7 @@ We need a scanner that we tell us
 
 We need structure.
 we literrally need structure.
-I need a struct that holds/store commands, contexts and args.
-for now I have a list of strings `***`. I can turn this to a struct
+I need a struct that holds/store command, context and arg.
 
 we need to make the difference between cmd and command list.
 
@@ -213,3 +212,21 @@ struct input{
 	context
 	arg
 }
+
+Sep 27, 22:33
+
+commands
+contexts
+args
+
+	they are hard coded list of string.
+
+we need the number of arguments in the cli
+for example
+	ls quests 10
+	3 arguments
+we also need the arg value
+
+need to handle the last argument (arg) 
+can be a number
+can be a string.

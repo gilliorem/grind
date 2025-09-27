@@ -1,14 +1,13 @@
 #include "../include/grind.h"
-// list token
 
 //TODO: store these in a proper place...
 char *tokens[] = {"command", "context", "argument"};
 char *commands[] = {"ls", "log",  "add", "complete", "yield","recap", "help"};
-char *contexts[] = {"event", "quest", "desire", "balance", "both"};
-char *args[] = {"today", "tomorrow", "week", "urgent", "all"};
+char *contexts[] = {"event", "quests", "desire", "balance", "both"};
+char *args[] = {"5", "10", "0", "-1", "today", "tomorrow", "week", "urgent", "all"};
+// TODO: for args, need to implement numbers
 
 char **parsed_input[] =  {commands, contexts, args};
-// for args, need to implement *numbers.*
 
 void	reset_prompt(int sig)
 {
@@ -23,7 +22,7 @@ int	count_input_elements(char **input)
 {
 	int i;
 	for (i = 0; input[i]; i++);
-	printf("Number of elements:%d\n", i);
+	printf("e:%d\n", i);
 	return i;
 }
 
@@ -57,7 +56,6 @@ char*	get_context(char **input)
 		if (strcmp(input[1], contexts[i]) == 0)
 		{
 			context = input[1];	
-			printf("element 2 is matching with context:%s\n",contexts[i]);
 			return (context);
 		}
 	}
@@ -68,9 +66,20 @@ char*	get_context(char **input)
 
 char*	get_arg(char **input)
 {
-	char *arg;
+	char *arg = "";
+	int flag = 1;
 	if (!input[2])
 		return (NULL);
+	for (int i = 0; input[2][i]; i++)
+	{
+		if (!isdigit(input[2][i]))
+		{
+			flag = 0;
+			break;
+		}
+	}
+	if (flag == 1)
+		return (strcpy(arg, input[2]));
 	for (int i = 0; args[i]; i++)
 	{
 		if (strcmp(input[2], args[i]) == 0)
@@ -87,26 +96,22 @@ char*	get_arg(char **input)
 
 void	handle_words(char **words, char *commands[])
 {
-	char *cmd;
-	char *context;
-	char *arg;
+//	char *cmd = get_cmd(words);
+//	char *context = words[1];
+	char *arg = words[2];
+	int arg_int = atoi(arg);
 	int w = count_input_elements(words);
 	char error[] = "Please enter correct number of arguments.\n";
 	switch (w)
 	{
 		case 1:
-			cmd = get_cmd(words);
-			if (!cmd)
-				execute_cmd(words, commands);
+			execute_cmd(words, commands, arg_int);
 			break;
 		case 2:
-			cmd = get_cmd(words);
-			context = get_context(words);
+			execute_cmd(words, commands, arg_int);
 			break;
 		case 3:
-			cmd = get_cmd(words);
-			context = get_context(words);
-			arg = get_arg(words);
+			execute_cmd(words, commands, arg_int);
 			break;
 		default:
 			write(STDERR_FILENO, error, strlen(error));
@@ -129,7 +134,7 @@ void	get_user_prompt()
 		line = readline("./grind$ ");
 		words = ft_split(line, ' ');
 		add_history(line);
-		handle_words(words);
+		handle_words(words, commands);
 		handle_exit(line);
 	}
 }

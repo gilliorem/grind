@@ -5,7 +5,6 @@ void	print_events(); // ?
 /* need to move to the time module time.c */
 char	*get_current_time() 
 {
-	
 	time_t now = time(NULL); // returns number of seconds since 1/1/1970
 	printf("sec since 1/1/70: %ld\n", now); // 1758784912
 	char *curr_time = ctime(&now); 
