@@ -28,10 +28,6 @@ void	cmd_ls(char *cmd, char *context, int n)
 		}
 		return ;
 	}
-	else if (n < 0)
-	{
-		// read arg as char *
-	}
 	while ((line = get_next_line(fd)))
 	{
 		printf("%s", line);
@@ -60,5 +56,4 @@ void	execute_cmd(char **input, char *commands[], int n)
 		}
 		//TODO each cmd
 	}
-			
 }

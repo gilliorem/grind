@@ -12,6 +12,49 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef enum
+{
+	CMD_NONE,
+	CMD_LS,
+	CMD_LOG,
+	CMD_RECAP,
+	CMD_ADD,
+	CMD_COMPLETE,
+	CMD_YIELD,
+	CMD_HELP,
+	CMD_UNKNOWN
+} CommandType;
+
+typedef enum
+{
+	CTX_NONE,
+	CTX_QUEST,
+	CTX_YIELD,
+	CTX_DESIRE,
+} ContextType;
+
+typedef	enum
+{
+	ARG_NONE,
+	ARG_INT,
+	ARG_STRING,
+}ArgType;
+
+typedef enum
+{
+	CMD,
+	CTX,
+	ARG
+}Token_type; 
+
+/* Need to identify the type of the token (int/char/char* ...)*/
+typedef struct s_token
+{
+	Token_type type;
+	char *str;
+	int num;
+}t_token;
+
 typedef struct s_task
 {
     int id;

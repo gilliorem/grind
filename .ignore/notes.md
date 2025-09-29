@@ -271,3 +271,11 @@ Sep 28, 01:32
 Restructuration:
     need to have a logic for each cmd
     and cmd with arguments
+	
+parser logic:
+	define our words
+	scan
+	count words
+	identify words (tokenization)
+	find pair (token match)
+	execute

@@ -66,7 +66,7 @@ char*	get_context(char **input)
 
 char*	get_arg(char **input)
 {
-	char *arg = "";
+	char *arg;
 	int flag = 1;
 	if (!input[2 + 1])
 		return (NULL);
@@ -78,21 +78,16 @@ char*	get_arg(char **input)
 			break;
 		}
 	}
-	printf("flag:%d\n",flag);
 	if (flag == 1)
 	{
-		printf("%s\n%s\n",input[1],input[2]);
-		char *dest = strcpy(input[2 + 1], arg);
-		char *src = arg;
-		printf("dest:%s\nsrc:%s\n",dest,src);
-		return (dest);
+		arg = strdup(input[2+1]);
+		return arg;
 	}
 	for (int i = 0; args[i]; i++)
 	{
-		if (strcmp(input[2], args[i]) == 0)
+		if (strcmp(input[2+1], args[i]) == 0)
 		{
 			arg = args[i];
-			printf("element 1 is matching with arg:%s\n",arg);
 			return (arg);
 		}
 	}
@@ -101,6 +96,31 @@ char*	get_arg(char **input)
 	return NULL;
 }
 
+// lets build a hash table since our input is
+// more than one char.
+//
+
+void	add_token(t_token token)
+{
+	char	
+}
+
+void	scan_input(char *input)
+{
+	int i = 0;
+	while (input[i])
+	{
+		switch (input[i])
+		{
+			case 'l':
+				add_token(CMD_LS);
+
+		}
+		i++;
+	}
+}
+
+// this is my `scan function`
 void	handle_words(char **words, char *commands[])
 {
 //	char *cmd = get_cmd(words);
