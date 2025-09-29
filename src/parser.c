@@ -2,12 +2,14 @@
 
 //TODO: store these in a proper place...
 char *tokens[] = {"command", "context", "argument"};
-char *commands[] = {"ls", "log",  "add", "complete", "yield","recap", "help"};
+t_command commands[] = {
+	{"ls", CMD_LS},
+	{"log", CMD_LOG},
+	{"add", CMD_ADD}
+};
 char *contexts[] = {"events", "quests", "rewards", "balance", "both"};
 char *args[] = {"5", "10", "0", "-1", "today", "tomorrow", "week", "urgent", "all"};
 // TODO: for args, need to implement numbers
-
-char **parsed_input[] =  {commands, contexts, args};
 
 void	reset_prompt(int sig)
 {
@@ -25,7 +27,7 @@ int	count_input_elements(char **input)
 	printf("e:%d\n", i);
 	return i;
 }
-
+/*
 char*	get_cmd(char **input)
 {
 	char *cmd;
@@ -44,12 +46,22 @@ char*	get_cmd(char **input)
 	write(2, error_msg, strlen(error_msg)); 
 	return NULL;
 }
+*/
 
 CommandType get_cmd(char **input)
 {
 	if (!input[0])
 		return CMD_NONE;
-
+	for (int i = 0; commands[i].name; i++)
+	{
+		if (strcmp(input[0], commands[i].name) == 0)
+		{
+			return commands[i].type;	
+		}
+	}
+	char error_msg[] = "please enter a valid command.\n";
+	write(2, error_msg, strlen(error_msg)); 
+	return CMD_UNKNOWN;
 }
 
 char*	get_context(char **input)

@@ -12,6 +12,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+
 typedef enum
 {
 	CMD_NONE,
@@ -48,6 +49,12 @@ typedef enum
 	ARG
 }Token_type; 
 
+typedef struct s_command
+{
+	const char *name;
+	CommandType type;
+}t_command;
+
 /* Need to identify the type of the token (int/char/char* ...)*/
 typedef struct s_token
 {
@@ -82,7 +89,7 @@ int	get_current_month();
 char 	*get_ledger_file();
 /*Parser*/
 void	reset_prompt(int sig);
-char	*get_cmd(char **input);
+CommandType	get_cmd(char **input);
 char	*get_context(char **input);
 char	*get_arg(char **input);
 
