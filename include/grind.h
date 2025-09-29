@@ -38,6 +38,7 @@ typedef	enum
 	ARG_NONE,
 	ARG_INT,
 	ARG_STRING,
+	ARG_DATE,
 }ArgType;
 
 typedef enum
@@ -91,7 +92,7 @@ void	handle_exit(char *line);
 void	parse_cmd(char *cmd);
 
 /* Commands execution */
-void	cmd_ls(char *cmd, char *context, int n);
+void	execute_ls(char *cmd, char *context, int n);
 int		log_quests(int n);
 
 void	execute_cmd(char **input, char *commands[], int arg);

@@ -279,3 +279,13 @@ parser logic:
 	identify words (tokenization)
 	find pair (token match)
 	execute
+
+the argument case be a cmd, a `cmd_ctx` (actually we could even call it argument1) and 2nd argument...
+
+#### The problem with `get_arg`
+The return value `arg` can have different type.
+it can be an int or a `char *`
+the actual way we can handle this is actually by passing void to the function.
+`void get_arg`
+check whether arg is multiple digit values 
+in that case return an int; or return the `char *` if it is not.

@@ -7,7 +7,7 @@
 
 // ls (without context and arg: log quests.tsv)
 
-void	cmd_ls(char *cmd, char *context, int n)
+void	execute_ls(char *cmd, char *context, int n)
 {
 	char *data_dir = "./data/";
 	char *full_path = ft_strjoin(data_dir, context);
@@ -39,21 +39,9 @@ void	execute_cmd(char **input, char *commands[], int n)
 {
 	char *cmd = get_cmd(input);
 	char *context = get_context(input);
-	char *arg = get_arg(input);
-	int int_arg = 0;
-	if (n == 3)
+	switch (cmd)
 	{
-		if (isdigit(arg[0]))
-		{
-			int_arg = atoi(arg);
-			if (strcmp(cmd, commands[0]) == 0)
-				cmd_ls(cmd, context, atoi(arg));
-		}
-		else
-		{
-			if (strcmp(cmd, commands[0]) == 0)
-				cmd_ls(cmd, context,  -1);
-		}
-		//TODO each cmd
+		case "ls":
+			
 	}
 }

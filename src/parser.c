@@ -42,8 +42,14 @@ char*	get_cmd(char **input)
 	}
 	char error_msg[] = "please enter a valid command.\n";
 	write(2, error_msg, strlen(error_msg)); 
-	rl_replace_line("", 0);
 	return NULL;
+}
+
+CommandType get_cmd(char **input)
+{
+	if (!input[0])
+		return CMD_NONE;
+
 }
 
 char*	get_context(char **input)
@@ -96,49 +102,22 @@ char*	get_arg(char **input)
 	return NULL;
 }
 
-// lets build a hash table since our input is
-// more than one char.
-//
-
-void	add_token(t_token token)
-{
-	char	
-}
-
-void	scan_input(char *input)
-{
-	int i = 0;
-	while (input[i])
-	{
-		switch (input[i])
-		{
-			case 'l':
-				add_token(CMD_LS);
-
-		}
-		i++;
-	}
-}
 
 // this is my `scan function`
 void	handle_words(char **words, char *commands[])
 {
-//	char *cmd = get_cmd(words);
-//	char *context = words[1];
-	char *arg = words[2];
-	int arg_int = atoi(arg);
 	int w = count_input_elements(words);
 	char error[] = "Please enter correct number of arguments.\n";
 	switch (w)
 	{
 		case 1:
-			execute_cmd(words, commands, arg_int);
+			execute_cmd(words, commands, 1);
 			break;
 		case 2:
-			execute_cmd(words, commands, arg_int);
+			execute_cmd(words, commands, 2);
 			break;
 		case 3:
-			execute_cmd(words, commands, arg_int);
+			execute_cmd(words, commands, 3);
 			break;
 		default:
 			write(STDERR_FILENO, error, strlen(error));
