@@ -27,6 +27,7 @@ int	count_input_elements(char **input)
 	printf("e:%d\n", i);
 	return i;
 }
+
 /*
 char*	get_cmd(char **input)
 {
@@ -55,9 +56,7 @@ CommandType get_cmd(char **input)
 	for (int i = 0; commands[i].name; i++)
 	{
 		if (strcmp(input[0], commands[i].name) == 0)
-		{
 			return commands[i].type;	
-		}
 	}
 	char error_msg[] = "please enter a valid command.\n";
 	write(2, error_msg, strlen(error_msg)); 
@@ -116,7 +115,7 @@ char*	get_arg(char **input)
 
 
 // this is my `scan function`
-void	handle_words(char **words, char *commands[])
+void	handle_words(char **words, t_command commands[])
 {
 	int w = count_input_elements(words);
 	char error[] = "Please enter correct number of arguments.\n";

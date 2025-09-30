@@ -7,8 +7,10 @@
 
 // ls (without context and arg: log quests.tsv)
 
-void	execute_ls(char *cmd, char *context, int n)
+void	execute_ls(char *context, int n)
 {
+	if (context == NULL)
+		context = "quests";
 	char *data_dir = "./data/";
 	char *full_path = ft_strjoin(data_dir, context);
 	full_path = ft_strjoin(full_path, ".tsv");
@@ -35,13 +37,22 @@ void	execute_ls(char *cmd, char *context, int n)
 	}
 }
 
-void	execute_cmd(char **input, char *commands[], int n)
+void	execute_cmd(char **input, t_command commands[], int n)
 {
-	char *cmd = get_cmd(input);
-	char *context = get_context(input);
+	CommandType cmd = get_cmd(input);
+	//char *context = get_context(input);
+	char error_msg_cmd_none[] = "please enter a valid command.\n";
+	char error_msg_cmd_unknown[] = "Command not found.\n";
 	switch (cmd)
 	{
-		case "ls":
-			
+		case CMD_NONE:
+			write(STDERR_FILENO, error_msg_cmd_none, strlen(error_msg_cmd_none));
+			return ;
+		case CMD_LS:
+			execute_ls(NULL, 0);
+			break;
+		default:
+			write(STDERR_FILENO, error_msg_cmd_unknown, strlen(error_msg_cmd_unknown));
+			return ;
 	}
 }

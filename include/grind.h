@@ -12,7 +12,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
 typedef enum
 {
 	CMD_NONE,
@@ -94,13 +93,13 @@ char	*get_context(char **input);
 char	*get_arg(char **input);
 
 void	get_user_prompt();
-void	handle_words(char **words, char *commands[]);
+void	handle_words(char **words, t_command commands[]);
 void	handle_exit(char *line);
 void	parse_cmd(char *cmd);
 
 /* Commands execution */
-void	execute_ls(char *cmd, char *context, int n);
+void	execute_ls(char *context, int n);
 int		log_quests(int n);
 
-void	execute_cmd(char **input, char *commands[], int arg);
+void	execute_cmd(char **input, t_command commands[], int arg);
 #endif
