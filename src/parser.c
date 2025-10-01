@@ -7,7 +7,16 @@ t_command commands[] = {
 	{"log", CMD_LOG},
 	{"add", CMD_ADD}
 };
-char *contexts[] = {"events", "quests", "rewards", "balance", "both"};
+
+t_context contexts[] = {
+	{"quests", CTX_QUESTS},
+	{"quest", CTX_QUEST},
+	{"desire", CTX_DESIRE},
+	{"yield", CTX_YIELD},
+	{"balance", CTX_BALANCE},
+};
+
+//char *contexts[] = {"events", "quests", "rewards", "balance", "both"};
 char *args[] = {"5", "10", "0", "-1", "today", "tomorrow", "week", "urgent", "all"};
 // TODO: for args, need to implement numbers
 
@@ -49,7 +58,7 @@ char*	get_cmd(char **input)
 }
 */
 
-CommandType get_cmd(char **input)
+command_type get_cmd(char **input)
 {
 	if (!input[0])
 		return CMD_NONE;
@@ -63,6 +72,7 @@ CommandType get_cmd(char **input)
 	return CMD_UNKNOWN;
 }
 
+/*
 char*	get_context(char **input)
 {
 	char *context;
@@ -79,6 +89,21 @@ char*	get_context(char **input)
 	char error_msg[] = "please enter a valid context\n";
 	write(2, error_msg, strlen(error_msg)); 
 	return NULL;
+}
+*/
+
+context_type get_context(char **input)
+{
+	if (!input[1])
+		return CTX_NONE;
+	for (int i = 0; contexts[i].name; i++)
+	{
+		if (strcmp(input[1], contexts[i].name) == 0)
+			return contexts[i].type;
+	}
+	char error_msg[] = "please enter a valid context.\n";
+	write(2, error_msg, strlen(error_msg)); 
+	return CTX_UNKNOWN;
 }
 
 char*	get_arg(char **input)

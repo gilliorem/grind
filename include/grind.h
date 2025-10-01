@@ -23,15 +23,18 @@ typedef enum
 	CMD_YIELD,
 	CMD_HELP,
 	CMD_UNKNOWN
-} CommandType;
+} command_type;
 
 typedef enum
 {
 	CTX_NONE,
 	CTX_QUEST,
+	CTX_QUESTS,
 	CTX_YIELD,
 	CTX_DESIRE,
-} ContextType;
+	CTX_BALANCE,
+	CTX_UNKNOWN,
+} context_type;
 
 typedef	enum
 {
@@ -39,25 +42,30 @@ typedef	enum
 	ARG_INT,
 	ARG_STRING,
 	ARG_DATE,
-}ArgType;
+}arg_type;
 
 typedef enum
 {
 	CMD,
 	CTX,
 	ARG
-}Token_type; 
+}token_type; 
 
 typedef struct s_command
 {
 	const char *name;
-	CommandType type;
+	command_type type;
 }t_command;
 
+typedef struct s_context
+{
+	const char *name;
+	context_type type;
+}t_context;
 /* Need to identify the type of the token (int/char/char* ...)*/
 typedef struct s_token
 {
-	Token_type type;
+	token_type type;
 	char *str;
 	int num;
 }t_token;
@@ -88,8 +96,8 @@ int	get_current_month();
 char 	*get_ledger_file();
 /*Parser*/
 void	reset_prompt(int sig);
-CommandType	get_cmd(char **input);
-char	*get_context(char **input);
+command_type	get_cmd(char **input);
+context_type	get_context(char **input);
 char	*get_arg(char **input);
 
 void	get_user_prompt();
@@ -98,7 +106,7 @@ void	handle_exit(char *line);
 void	parse_cmd(char *cmd);
 
 /* Commands execution */
-void	execute_ls(char *context, int n);
+void	execute_ls(t_context contexts, int n);
 int		log_quests(int n);
 
 void	execute_cmd(char **input, t_command commands[], int arg);

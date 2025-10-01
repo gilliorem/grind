@@ -197,15 +197,15 @@ push from home pc
 
 ### Commands
 cmd context arg
-ls quest // list quest in a importance order
-ls event 10 // list the last 10 events saved
+ls quests // list quest in a importance order
+ls events 10 // list the last 10 events saved
 log balance // print current wallet balance
 ls quest today `log the quest of the day (deadline today)`
 ls quest all // list all the quest
 ls both // list all the quest and the desire 
 ls quest week // list the quest of the week (until deadline comming sunday)
 deadline // list the quest in a deadline order
-ls yield // list yields from first to last chronologically
+ls rewards // list rewards from first to last chronologically
 ls quest urgent // list quest in order of importantecy
 recap print last 5 events, 5 desires and log wallet balance
 add quest ID deadline important-level gold
