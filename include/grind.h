@@ -30,8 +30,9 @@ typedef enum
 	CTX_NONE,
 	CTX_QUEST,
 	CTX_QUESTS,
+	CTX_LEDGER,
 	CTX_YIELD,
-	CTX_DESIRE,
+	CTX_REWARDS,
 	CTX_BALANCE,
 	CTX_UNKNOWN,
 } context_type;
@@ -106,7 +107,7 @@ void	handle_exit(char *line);
 void	parse_cmd(char *cmd);
 
 /* Commands execution */
-void	execute_ls(t_context contexts, int n);
+void	execute_ls(char *context, int n);
 int		log_quests(int n);
 
 void	execute_cmd(char **input, t_command commands[], int arg);

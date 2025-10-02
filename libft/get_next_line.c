@@ -6,16 +6,16 @@
 /*   By: regillio <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 09:40:15 by regillio          #+#    #+#             */
-/*   Updated: 2025/06/13 15:18:48 by regillio         ###   ########.fr       */
+/*   Updated: 2025/10/02 06:32:11 by regillio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #define BUFFER_SIZE	1024
 #include "libft.h"
 
-/* initialize the static buffer for the first run and read
+/* initialize the static buffer for the first run. Read
  * and append to the forming storage string (static_buf)
  * in the file until it finds a new line OR end of file
- * if there is a new line in the sbuf already, we process the s_buf
+ * if there is already a new line in the static buf, we process it 
  * before reading again
  * add total bytes var to handle no new line ending file.
  * returns the number of bytes read.
@@ -27,21 +27,27 @@ static int	read_file_until_newline(int fd, char *buf, char **static_buf)
 	ssize_t	total_bytes;
 	char	*tmp;
 
+	// why do we initialize bytes_read to 1?
 	bytes_read = 1;
 	if (!*static_buf)
 	{
+		// can use calloc here instead
 		*static_buf = malloc(BUFFER_SIZE + 1);
 		*static_buf[0] = '\0';
 	}
 	if (ft_strchr(*static_buf, '\n') != NULL)
 		return (bytes_read);
 	total_bytes = ft_strlen(*static_buf);
+	//while we dont find new line in buf and that the
+	//number  of bytes read is bigger than 0,
 	while ((ft_strchr(buf, '\n') == NULL) && (bytes_read > 0))
 	{
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 		total_bytes += bytes_read;
+		// what is this if statement for?
 		if (bytes_read <= 0)
 			return (total_bytes);
+		// we terminate buf so we can join properly?
 		buf[bytes_read] = '\0';
 		tmp = ft_strjoin(*static_buf, buf);
 		*static_buf = tmp;
@@ -49,7 +55,7 @@ static int	read_file_until_newline(int fd, char *buf, char **static_buf)
 	return (bytes_read);
 }
 
-/* exctract the line from the storage using 
+/* extract the line from the storage using 
  * substring until there is nothing left in the
  * storage
  * returns the extracted line 
@@ -79,7 +85,7 @@ static char	*extract_line(char *static_buf)
 	return (line);
 }
 
-/*  we make a copy to of the updated storage
+/* we make a copy of the updated storage
  * so we can free the extracted-line.
  * returns the new storage. (static_buf)
  * I work with **, so I can point directly to *static_buf content.

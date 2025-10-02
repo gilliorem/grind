@@ -5,13 +5,15 @@ char *tokens[] = {"command", "context", "argument"};
 t_command commands[] = {
 	{"ls", CMD_LS},
 	{"log", CMD_LOG},
-	{"add", CMD_ADD}
+	{"add", CMD_ADD},
+	{"complete", CMD_COMPLETE}
 };
 
 t_context contexts[] = {
 	{"quests", CTX_QUESTS},
 	{"quest", CTX_QUEST},
-	{"desire", CTX_DESIRE},
+	{"ledger", CTX_LEDGER},
+	{"rewards", CTX_REWARDS},
 	{"yield", CTX_YIELD},
 	{"balance", CTX_BALANCE},
 };
@@ -33,7 +35,6 @@ int	count_input_elements(char **input)
 {
 	int i;
 	for (i = 0; input[i]; i++);
-	printf("e:%d\n", i);
 	return i;
 }
 
@@ -137,7 +138,6 @@ char*	get_arg(char **input)
 	write(2, error_msg, strlen(error_msg)); 
 	return NULL;
 }
-
 
 // this is my `scan function`
 void	handle_words(char **words, t_command commands[])

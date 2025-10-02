@@ -1,16 +1,36 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This CLI is centered around `src/`, where each module owns a slice of the command pipeline: `main.c` wires signals and the REPL, `parser.c` tokenizes input, `cmd.c` maps commands, and `ledger.c` handles persistence. Shared types live in `include/grind.h`. Utility routines are vendored in `libft/` and build into `libft.a`. Runtime data such as `ledger.tsv`, `quests.tsv`, and reward definitions are stored under `data/`; treat them as seed fixtures when developing.
+Core sources sit under `src/`: `main.c` bootstraps the REPL, `parser.c` tokenizes input, `cmd.c` dispatches work, and `ledger.c` touches TSV storage. Shared types live in `include/grind.h`. `libft/` provides reusable C helpers compiled as `libft.a`. Runtime fixtures (`ledger.tsv`, `quests.tsv`, `rewards.tsv`) live in `data/`; copy them before experimenting to restore state quickly.
 
 ## Build, Test, and Development Commands
-Run `make` from the repo root to compile `grind`; it will also refresh the `libft` static library as needed. Use `make clean` to drop object files, `make fclean` to remove the binary, and `make re` for a full rebuild. Launch the CLI with `./grind` and optionally pass a TSV ledger path if you add that CLI support.
+Run `make` to compile the CLI and refresh `libft.a`. Use `make clean` for objects, `make fclean` to drop the binary, and `make re` for a clean rebuild. Launch from the repo root with `./grind`.
 
 ## Coding Style & Naming Conventions
-We target C99 with tabs for indentation and brace-on-new-line formatting (see `src/handle_task.c` for reference). Prefer descriptive snake_case for functions and structs, and keep public declarations in `include/grind.h`. Reuse helpers from `libft` rather than rolling new utilities. When adding modules, mirror the existing pattern: place implementation in `src/feature.c`, declare interfaces in the header, and update `SRCS` inside the `Makefile`.
+Target C99, tabs for indentation, and brace-on-new-line formatting (see `src/handle_task.c`). Functions, structs, and files use snake_case. Public declarations belong in `include/grind.h`. New features add `src/feature.c`, update `SRCS` in the `Makefile`, and lean on `libft` helpers over custom rewrites.
 
 ## Testing Guidelines
-There is no automated harness yet, so exercise features manually. After any change, rebuild and run `./grind`, then verify typical flows: `ls quests`, `log quests 5`, `add quest "daily review"`, and `recap yield`. Keep a copy of the TSV fixtures before mutating them and document new columns. If you add regression coverage, colocate scripts under `task/` and reference them in this guide.
+We rely on manual tests. After edits, rebuild and walk the main flows: `ls quests`, `log quests 5`, `add quest "daily review"`, `recap yield`. Snapshot TSV files before mutating them and document schema tweaks alongside the code.
 
 ## Commit & Pull Request Guidelines
-Recent history favors short, imperative messages such as `add parser guard` or `implement cmd handler`. Follow that pattern and scope each commit to one logical change. PRs should summarize behavior, link any relevant issue, and include CLI transcripts or screenshots that prove the change. Note data migrations explicitly and flag any manual steps reviewers must perform.
+Commits stay short, imperative, and scoped (e.g., `add parser guard`, `implement cmd handler`). PRs describe the behavior change, link issues, and add CLI transcripts or screenshots when output shifts. Note data migrations or reviewer steps.
+
+## Architecture & Command Implementation
+Centralize command metadata so names, contexts, and arguments remain aligned. Define a table in `cmd.c`:
+```c
+typedef struct {
+    const char      *name;
+    context_type     context;
+    arg_type         arg;
+    int            (*handler)(const t_request *);
+} t_command_spec;
+```
+Add entries like `{ "log", CTX_QUESTS, ARG_INT, &handle_log }` and keep one authoritative list.
+
+**Step 1 – Parse.** Extend `parser.c` to build a `t_request` `{ command, context, argument }`; consult the spec table so numeric arguments are converted immediately when `arg == ARG_INT`.
+
+**Step 2 – Validate.** Create helpers such as `validate_context(&request, spec)` and `validate_arg(&request, spec)` that surface clear errors (`"log" requires an integer count`) before dispatching.
+
+**Step 3 – Dispatch.** Let `cmd.c` resolve the spec and forward the `t_request` to dedicated handlers. Split context-specific logic into files like `src/quests_command.c` or `src/yield_command.c`, each exposing `handle_log`, `handle_add`, etc.
+
+**Step 4 – Iterate with an example.** Start by moving the current quest logic: update the spec entry, implement `handle_log(const t_request *req)` in `src/quests_command.c`, and ensure it reads `req->argument.int_val`. Once that pattern works, follow the same steps for yield and balance features.
