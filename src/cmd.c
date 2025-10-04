@@ -34,6 +34,7 @@ void	execute_ls(char *context, int n)
 // delete that line -> strchr in the line
 // append a new line in the ledger file reporting this deletion
 // update the wallet balance
+
 void	complete_quest(char *context, char *id)
 {
 	if (strcmp(context, "quest") != 0)
@@ -46,7 +47,7 @@ void	complete_quest(char *context, char *id)
 		printf("Please provide a quest name.\n");
 		return ;
 	}
-	int fd = open("./data/quests.tsv", O_RDWR);
+	int fd = open("./data/quests.tsv", O_RDONLY);
 	if (fd == -1)
 		printf("Cannot open quests file.\n");
 	char *line = get_next_line(fd);
