@@ -53,8 +53,13 @@ int	write_line_in_file(char **line)
 		return 0;
 	for (int i = 0; line[i]; i++)
 	{
+		//line[i] = ft_strjoin(line[i], "\txxxx\t");
+		printf("%d:%s", i, line[i]);
+	}
+	return 0;
+	for (int i = 0; line[i]; i++)
+	{
 		write(fd, line[i], strlen(line[i]));
-		write(fd, "\t\t", 2);
 	}
 	write(fd, "\n", 1);
 	close(fd);

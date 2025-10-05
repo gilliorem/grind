@@ -67,11 +67,16 @@ char *get_quest_values()
 	return (line);
 }
 
-void	add_quest()
+int	add_quest()
 {
+	/*
+	if (!strstr("quest", quest) || !strchr(quest, 'q'))
+		return printf("cmd not found\n") & 0;
+	*/
 	char *no_tab_line = get_quest_values();
 	char **splited_line = split_line(no_tab_line);
 	write_line_in_file(splited_line);
+	return 1;
 }
 
 //TODO figure out a better way to use context
