@@ -123,6 +123,7 @@ char *append_lines(int fd, char *id)
     printf("lines:%s\n",lines);
     return lines;
 }
+
 // go implementer ca dans le projet mtn lol
 int main()
 {

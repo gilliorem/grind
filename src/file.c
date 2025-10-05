@@ -1,46 +1,66 @@
 #include "../include/grind.h"
 
-int	find_line_to_delete(int fd, char *id)
+static int	identify_line(char *line, char *id)
 {
-	int line_to_delete = 1;
-	char *line;
-	while ((line = get_next_line(fd)))
-	{
-		if (strstr(line, id))
-		{
-			printf("line to delete:%d %s\n", line_to_delete, line);
-			return line_to_delete;
-		}
-		line_to_delete++;
-	}
-	printf("did not find line to delete\n");
+	if (strstr(line, id))
+		return 1;
 	return 0;
 }
 
-int	duplicate_file(int fd)
+static char *append_new_lines(int fd, char *id)
 {
-	int	fd_dup = fd;
+	char *lines;
+	lines = strdup("");
 	char *line;
 	while ((line = get_next_line(fd)))
 	{
-		printf("%s", line);
+		if (!identify_line(line, id))
+			lines = ft_strjoin(lines, line);
+		free (line);
 	}
-	printf("End Of Original File\n");
-	printf("fd original:%d\n", fd);
-	printf("fd dup:%d\n", fd_dup);
-	while ((line = get_next_line(fd_dup)))
-	{
-		printf("%s", line);
-	}
-	printf("End Of Duplicated File\n");
-	return (fd_dup);
+	printf("lines:%s\n", lines);
+	return lines;
 }
 
-void	remove_line(int fd, int dup_fd, int line_to_delete)
+int	update_file(char *id)
 {
-	return ;
+	int fd = open("./data/quests.tsv", O_RDONLY);
+	if (fd == -1)
+		return printf("error file\n") & 0;
+	char *lines = append_new_lines(fd, id);
+	close (fd);
+	fd = open("./data/quests.tsv", O_CREAT | O_TRUNC | O_WRONLY);
+	write(fd, lines, strlen(lines));
+	return 1;
 }
-	
+
+// in the sense that ID DEADLINE GOLD are KEY
+//					task 07/10   150  are VALUES
+
+char	**split_line(char *line)
+{
+	char **splited_line;
+	splited_line = ft_split(line, '\t');
+	return (splited_line);
+}
+
+int	write_line_in_file(char **line)
+{
+	int	fd = open("./data/quests.tsv", O_APPEND | O_WRONLY);
+	if (fd == -1)
+		return printf("file error\n") & 0;
+	if (!line)
+		return 0;
+	for (int i = 0; line[i]; i++)
+	{
+		write(fd, line[i], strlen(line[i]));
+		write(fd, "\t\t", 2);
+	}
+	write(fd, "\n", 1);
+	close(fd);
+	return 1;
+}
+
 /*
 int main()
 {

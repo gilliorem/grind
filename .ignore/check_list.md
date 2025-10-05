@@ -9,5 +9,9 @@ handle context and arg in a logical manner [ ] (see how the shell does...)
 
 01.10
 Change context to contextType [ ]
+
+06.10
 code 1 function per cmd [ ]
+	complete quest [x] *fix the 2-words+ arg*
+	add *context []
 

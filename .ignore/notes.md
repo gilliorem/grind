@@ -299,3 +299,15 @@ Example:
 
 
 I might need to drop the ARG and instead use one object...
+
+Oct 6, 01:14 a.m
+Need to fix the parsing for the id argumentfor example
+`complete quest "WORK APM"` < this is only one argumemt
+need to check how readline interpretes ""
+
+On to the add quest function.
+so here instead of delete a line, we are writing one.
+we are writing one line with different words that are separated with tabs
+at first we can write at the end of the file using `O_APPEND`
+
+

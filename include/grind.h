@@ -94,11 +94,13 @@ typedef struct s_event
 char	*get_current_time();
 void	get_deadline_time(int days);
 int	get_current_month();
+
 /*File*/
 char 	*get_ledger_file();
-int	find_line_to_delete(int fd, char *id);
-int	duplicate_file(int fd);
-void	remove_line(int fd, int fd_dup, int line_to_delete);
+void	execute_cmd(char **input, t_command commands[], int arg);
+int		update_file(char *id);
+char	**split_line(char *line);
+int		write_line_in_file(char **lines);
 
 /*Parser*/
 void	reset_prompt(int sig);
@@ -114,9 +116,7 @@ void	parse_cmd(char *cmd);
 /* Commands execution */
 void	execute_ls(char *context, int n);
 int		log_quests(int n);
-
-void	execute_cmd(char **input, t_command commands[], int arg);
-
-
+void	complete_quest(char *context, char *id);
+char	*get_quest_values();
 
 #endif

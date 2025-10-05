@@ -161,6 +161,14 @@ void	handle_words(char **words, t_command commands[])
 	}
 }
 
+void	free_words(char ***words)
+{
+	if (**words)
+		for (int i = 0; *words[i]; i++)
+			free(*words[i]);
+	free(**words);
+}
+
 void	handle_exit(char *line)
 {
 	if (strcmp(line, "exit") == 0)
