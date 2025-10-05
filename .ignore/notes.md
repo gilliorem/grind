@@ -289,3 +289,13 @@ the actual way we can handle this is actually by passing void to the function.
 `void get_arg`
 check whether arg is multiple digit values 
 in that case return an int; or return the `char *` if it is not.
+
+Oct 03, 23:41
+I will create a new struct to represente the whole command.
+`char *name` because it is always going to be a string
+`t_context context` second arg can be different. 
+Example:
+`add desire ID cost`: have 3 context elements `desire ID cost`
+
+
+I might need to drop the ARG and instead use one object...

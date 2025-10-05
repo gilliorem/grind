@@ -2,7 +2,7 @@ NAME = grind
 CC = gcc
 CFLAGS = -g
 SRC_DIR = src
-SRCS = handle_task.c ledger.c parser.c cmd.c quest.c main.c
+SRCS = handle_task.c ledger.c parser.c cmd.c quest.c file.c main.c
 
 OBJS = $(addprefix $(SRC_DIR)/,$(SRCS:.c=.o))
 INCLUDES =  -Iinclude -Ilibft

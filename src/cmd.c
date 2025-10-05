@@ -1,5 +1,6 @@
 #include "../include/grind.h"
 
+// this function is a handler. it is an argument of the command
 void	execute_ls(char *context, int n)
 {
 	if (context == NULL)
@@ -36,39 +37,14 @@ void	execute_ls(char *context, int n)
 // update the wallet balance
 void	complete_quest(char *context, char *id)
 {
-	if (strcmp(context, "quest") != 0)
-	{
-		printf("Usage: complete quest questName");
-		return; 
-	}
-	if (id == NULL)
-	{
-		printf("Please provide a quest name.\n");
-		return ;
-	}
-	int fd = open("./data/quests.tsv", O_RDWR);
+	int fd = open("./data/quests.tsv", O_RDONLY);
 	if (fd == -1)
-		printf("Cannot open quests file.\n");
-	char *line = get_next_line(fd);
-	while ((line = get_next_line(fd)))
-	{
-		if (strstr(line, id))
-		{
-			printf("Confirm %s is complete?\nY/N\n",id);
-			char answer;
-			scanf("%c", &answer);
-			printf("%c\n", answer);
-			if (answer != 'Y')
-			{
-				printf("abort\n");
-				return;
-			}
-			write(fd, "DONE", 5);
-			printf("Well done. %s\n",line);
-			free(line);
-			return;
-		}
-	}
+		printf("wrong file\n");
+	find_line_to_delete(fd, id);
+	close(fd);
+	fd = open("./data/quests.tsv", O_RDONLY);
+	duplicate_file(fd);
+	close(fd);
 }
 
 //TODO figure out a better way to use context

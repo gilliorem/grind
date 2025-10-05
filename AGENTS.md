@@ -16,7 +16,7 @@ We rely on manual tests. After edits, rebuild and walk the main flows: `ls quest
 Commits stay short, imperative, and scoped (e.g., `add parser guard`, `implement cmd handler`). PRs describe the behavior change, link issues, and add CLI transcripts or screenshots when output shifts. Note data migrations or reviewer steps.
 
 ## Architecture & Command Implementation
-Centralize command metadata so names, contexts, and arguments remain aligned. Define a table in `cmd.c`:
+Centralize command *metadata* so names, contexts, and arguments remain aligned. Define a table in `cmd.c`:
 ```c
 typedef struct {
     const char      *name;

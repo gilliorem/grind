@@ -52,18 +52,19 @@ typedef enum
 	ARG
 }token_type; 
 
-typedef struct s_command
-{
-	const char *name;
-	command_type type;
-}t_command;
-
 typedef struct s_context
 {
 	const char *name;
 	context_type type;
 }t_context;
 /* Need to identify the type of the token (int/char/char* ...)*/
+typedef struct s_command
+{
+	const char *name;
+	command_type type;
+	t_context	context;
+}t_command;
+
 typedef struct s_token
 {
 	token_type type;
@@ -95,6 +96,10 @@ void	get_deadline_time(int days);
 int	get_current_month();
 /*File*/
 char 	*get_ledger_file();
+int	find_line_to_delete(int fd, char *id);
+int	duplicate_file(int fd);
+void	remove_line(int fd, int fd_dup, int line_to_delete);
+
 /*Parser*/
 void	reset_prompt(int sig);
 command_type	get_cmd(char **input);
@@ -111,4 +116,7 @@ void	execute_ls(char *context, int n);
 int		log_quests(int n);
 
 void	execute_cmd(char **input, t_command commands[], int arg);
+
+
+
 #endif
