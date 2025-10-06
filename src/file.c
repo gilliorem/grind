@@ -34,33 +34,14 @@ int	update_file(char *id)
 	return 1;
 }
 
-// in the sense that ID DEADLINE GOLD are KEY
-//					task 07/10   150  are VALUES
-
-char	**split_line(char *line)
-{
-	char **splited_line;
-	splited_line = ft_split(line, '\t');
-	return (splited_line);
-}
-
-int	write_line_in_file(char **line)
+int	write_line_in_file(char *line)
 {
 	int	fd = open("./data/quests.tsv", O_APPEND | O_WRONLY);
 	if (fd == -1)
 		return printf("file error\n") & 0;
 	if (!line)
 		return 0;
-	for (int i = 0; line[i]; i++)
-	{
-		//line[i] = ft_strjoin(line[i], "\txxxx\t");
-		printf("%d:%s", i, line[i]);
-	}
-	return 0;
-	for (int i = 0; line[i]; i++)
-	{
-		write(fd, line[i], strlen(line[i]));
-	}
+    write(fd, line, strlen(line));
 	write(fd, "\n", 1);
 	close(fd);
 	return 1;

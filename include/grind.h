@@ -100,7 +100,7 @@ char 	*get_ledger_file();
 void	execute_cmd(char **input, t_command commands[], int arg);
 int		update_file(char *id);
 char	**split_line(char *line);
-int		write_line_in_file(char **lines);
+int		write_line_in_file(char *line);
 
 /*Parser*/
 void	reset_prompt(int sig);

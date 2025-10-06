@@ -53,15 +53,17 @@ void	complete_quest(char *context, char *id)
 char *get_quest_values()
 {
 	char id[30];
-	printf("ID:\n");
+	printf("ID:");
 	scanf("%s", id);
 	char deadline[6];
-	printf("DEADLINE:\n");
+	printf("DEADLINE:");
 	scanf("%s", deadline);
 	char gold[6];
-	printf("GOLD:\n");
+	printf("GOLD:");
 	scanf("%s", gold);
-	char *line = ft_strjoin(id, deadline);
+	char *line = ft_strjoin(id, "\t\t");
+	line = ft_strjoin(line, deadline);
+	line = ft_strjoin(line, "\t\t");
 	line = ft_strjoin (line, gold);
 	printf("%s\n", line);
 	return (line);
@@ -69,13 +71,8 @@ char *get_quest_values()
 
 int	add_quest()
 {
-	/*
-	if (!strstr("quest", quest) || !strchr(quest, 'q'))
-		return printf("cmd not found\n") & 0;
-	*/
-	char *no_tab_line = get_quest_values();
-	char **splited_line = split_line(no_tab_line);
-	write_line_in_file(splited_line);
+	char *line = get_quest_values();
+	write_line_in_file(line);
 	return 1;
 }
 
