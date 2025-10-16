@@ -23,45 +23,32 @@ typedef enum
 	CMD_YIELD,
 	CMD_HELP,
 	CMD_UNKNOWN
-} command_type;
-
-typedef enum
-{
-	CTX_NONE,
-	CTX_QUEST,
-	CTX_QUESTS,
-	CTX_LEDGER,
-	CTX_YIELD,
-	CTX_REWARDS,
-	CTX_BALANCE,
-	CTX_UNKNOWN,
-} context_type;
+} command_name;
 
 typedef	enum
 {
-	ARG_NONE,
-	ARG_INT,
-	ARG_STRING,
-	ARG_DATE,
-}arg_type;
+	OPT_NONE,
+	OPT_INT,
+	OPT_STRING,
+	OPT_DATE,
+} option_type;
 
 typedef enum
 {
 	CMD,
-	CTX,
-	ARG
+	OPT
 }token_type; 
 
-typedef struct s_context
+typedef struct s_option
 {
 	const char *name;
-	context_type type;
+	option_type type;
 }t_context;
-/* Need to identify the type of the token (int/char/char* ...)*/
+
 typedef struct s_command
 {
 	const char *name;
-	command_type type;
+	command_name name;
 	t_context	context;
 }t_command;
 
@@ -93,7 +80,7 @@ typedef struct s_event
 /*Time*/
 char	*get_current_time();
 void	get_deadline_time(int days);
-int	get_current_month();
+int		get_current_month();
 
 /*File*/
 char 	*get_ledger_file();
@@ -118,5 +105,7 @@ void	execute_ls(char *context, int n);
 int		log_quests(int n);
 void	complete_quest(char *context, char *id);
 char	*get_quest_values();
+int		add_quest(t_command add);
+
 
 #endif

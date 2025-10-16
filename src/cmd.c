@@ -62,15 +62,20 @@ char *get_quest_values()
 	printf("GOLD:");
 	scanf("%s", gold);
 	char *line = ft_strjoin(id, "\t\t");
-	line = ft_strjoin(line, deadline);
-	line = ft_strjoin(line, "\t\t");
-	line = ft_strjoin (line, gold);
+	ft_strjoin(line, deadline);
+	ft_strjoin(line, "\t\t");
+	ft_strjoin(line, gold);
 	printf("%s\n", line);
 	return (line);
 }
 
-int	add_quest()
+int	add_quest(t_command add)
 {
+	// TODO: Make this two lines a generic functio
+	printf("add name:%s\n",add.name);
+	if (strcmp(add.name, "add") != 0)
+		return printf("Command not found.\n") & 0;
+	printf("in add_quest()");
 	char *line = get_quest_values();
 	write_line_in_file(line);
 	return 1;
@@ -89,12 +94,13 @@ void	execute_cmd(char **input, t_command commands[], int n)
 			return ;
 		case CMD_LS:
 			execute_ls(input[1], 0);
-			break;
+			return;
 		case CMD_COMPLETE:
 			complete_quest(input[1], input[2]);
-			break;
+			return;
 		case CMD_ADD:
-			add_quest();
+			printf("here\n");
+			add_quest(commands[2]);
 		default:
 			write(STDERR_FILENO, error_msg_cmd_unknown, strlen(error_msg_cmd_unknown));
 			return ;

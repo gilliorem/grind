@@ -38,27 +38,6 @@ int	count_input_elements(char **input)
 	return i;
 }
 
-/*
-char*	get_cmd(char **input)
-{
-	char *cmd;
-	if (!input[0])
-		return NULL;
-	for (int i = 0; commands[i]; i++)
-	{
-		if (strcmp(input[0], commands[i]) == 0)
-		{
-			cmd = input[0];
-			printf("valid cmd is: %s\n",cmd);
-			return (cmd);
-		}
-	}
-	char error_msg[] = "please enter a valid command.\n";
-	write(2, error_msg, strlen(error_msg)); 
-	return NULL;
-}
-*/
-
 command_type get_cmd(char **input)
 {
 	if (!input[0])
@@ -66,32 +45,16 @@ command_type get_cmd(char **input)
 	for (int i = 0; commands[i].name; i++)
 	{
 		if (strcmp(input[0], commands[i].name) == 0)
-			return commands[i].type;	
+		{
+			printf("command name:%s\n", commands[i].name);
+			printf("command type:%d\n", commands[i].type);
+			return commands[i].type;
+		}
 	}
 	char error_msg[] = "please enter a valid command.\n";
 	write(2, error_msg, strlen(error_msg)); 
 	return CMD_UNKNOWN;
 }
-
-/*
-char*	get_context(char **input)
-{
-	char *context;
-	if (!input[1])
-		return NULL;
-	for (int i = 0; contexts[i]; i++)
-	{
-		if (strcmp(input[1], contexts[i]) == 0)
-		{
-			context = input[1];	
-			return (context);
-		}
-	}
-	char error_msg[] = "please enter a valid context\n";
-	write(2, error_msg, strlen(error_msg)); 
-	return NULL;
-}
-*/
 
 context_type get_context(char **input)
 {
@@ -105,38 +68,6 @@ context_type get_context(char **input)
 	char error_msg[] = "please enter a valid context.\n";
 	write(2, error_msg, strlen(error_msg)); 
 	return CTX_UNKNOWN;
-}
-
-char*	get_arg(char **input)
-{
-	char *arg;
-	int flag = 1;
-	if (!input[2 + 1])
-		return (NULL);
-	for (int i = 0; input[2 + 1][i]; i++)
-	{
-		if (!isdigit(input[2 + 1][i]))
-		{
-			flag = 0;
-			break;
-		}
-	}
-	if (flag == 1)
-	{
-		arg = strdup(input[2+1]);
-		return arg;
-	}
-	for (int i = 0; args[i]; i++)
-	{
-		if (strcmp(input[2+1], args[i]) == 0)
-		{
-			arg = args[i];
-			return (arg);
-		}
-	}
-	char error_msg[] = "please enter a valid argument\n";
-	write(2, error_msg, strlen(error_msg)); 
-	return NULL;
 }
 
 // this is my `scan function`

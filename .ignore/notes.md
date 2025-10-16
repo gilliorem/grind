@@ -196,23 +196,24 @@ I run the app.
 push from home pc
 
 ### Commands
-cmd context arg
-ls quests // list quest in a importance order
-ls events 10 // list the last 10 events saved
+cmd context arg > cmd arg
+ls quests // list quest in a importance order > ls  --quests | ls -q
+ls events 10 // list the last 10 events saved > ls  --events 10
+ls -e 10 | ls 10 -e | ls 10 --events
 log balance // print current wallet balance
+log -b | log --balance
 ls quest today `log the quest of the day (deadline today)`
-ls quest all // list all the quest
-ls both // list all the quest and the desire 
-ls quest week // list the quest of the week (until deadline comming sunday)
-deadline // list the quest in a deadline order
-ls rewards // list rewards from first to last chronologically
+ls -q -w
+ls -q -w // list the quest of the week (until deadline comming sunday)
+ls -q -w
+ls -r // list rewards from first to last chronologically
 ls quest urgent // list quest in order of importantecy
 recap print last 5 events, 5 desires and log wallet balance
 add quest ID deadline important-level gold
 add desire ID cost
 complete quest ID
 yield desire ID
-help display ascreen help with commin commsasm
+help display ascreen help with commin cmds
 
 
 ### Tokens
@@ -255,7 +256,7 @@ commands
 contexts
 args
 
-	they are hard coded list of string.
+they are hard coded list of string.
 
 we need the number of arguments in the cli
 for example
@@ -271,7 +272,6 @@ Sep 28, 01:32
 Restructuration:
     need to have a logic for each cmd
     and cmd with arguments
-	
 parser logic:
 	define our words
 	scan
@@ -310,4 +310,23 @@ so here instead of delete a line, we are writing one.
 we are writing one line with different words that are separated with tabs
 at first we can write at the end of the file using `O_APPEND`
 
+Oct 16, 17:16
+Today, we will look through the codebase clean:
+We want to have a more readable, easier to debug and easier to test code.
+- Remove what's unecessary
+- Refactore duplicate code
+- change data structure
+
+
+remove `get_arg`
+remove the whole context structure and instead have
+on cmd name and one argument
+the cmd name is one word, the argument can be multiple words that 
+respect a specific format
+like
+-arg1 -arg2 ... OR they are a number like
+ls 10 -q
+ls -q 10
+ls quests 10
+?
 
